@@ -1,8 +1,10 @@
+
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
+import { Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Pressable } from 'react-native';
+import {Link} from 'expo-router';
 
-export default function App() {
+export default function SignIn() {
 
   const [text, onChangeText] = React.useState('');
   const [text1, onChangeText1] = React.useState('');
@@ -60,9 +62,8 @@ export default function App() {
 
       <View style={styles.signUpContainer}>
         <Text style={styles.signUpText}>Don't have an account? </Text>
-        <TouchableOpacity>
-          <Text style={styles.signUpLink}>Sign Up</Text>
-        </TouchableOpacity>
+        
+<Link href='/SignIn.tsx' style={styles.signUpLink}>Sign Up</Link>
       </View>
 
       <StatusBar style="auto" />

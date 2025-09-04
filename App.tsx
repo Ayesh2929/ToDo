@@ -8,7 +8,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.mainTitle}>Sign In to</Text>
+      <Text style={styles.mainTitle}>Welcome Back</Text>
+      <Text style={styles.subTitle}>Sign in to continue to your account</Text>
 
       <SafeAreaView>
         <TextInput
@@ -26,19 +27,28 @@ export default function App() {
       </SafeAreaView>
 
       <View style={styles.btns} >
-        <Button title="SignIn" color="#fff" onPress={() => alert('Button pressed!')} />
-      </View>
-                  <View style={styles.socialButtonsContainer}>
-
-                  
-                    <TouchableOpacity style={styles.socialButtonText}>
+        <TouchableOpacity style={styles.socialButtonText}>
                 <Image 
-                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/733/733547.png' }} 
+                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/300/300221.png' }} 
+                  
                   style={styles.socialIcon}
                 />
-                <Text style={styles.socialButtonText}>Facebook</Text>
+          <Text style={styles.socialButtonText}>Sign In</Text>
+        </TouchableOpacity>
+      </View>
+                  <View style={styles.divider}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>OR</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+                        <View style={styles.signUpContainer}>
+              <Text style={styles.signUpText}>Don't have an account? </Text>
+              <TouchableOpacity>
+                <Text style={styles.signUpLink}>Sign Up</Text>
               </TouchableOpacity>
-</View>
+            </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -62,41 +72,72 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainTitle: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-    
+    marginBottom: 30,
+  },
+  subTitle: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 40,
+
   },
   input: {
-    height: 40,
-    margin: 12,
+    height: 50,
     borderWidth: 1,
-    padding: 10,
-    width: 200,
-    borderRadius: 10,
+    borderColor: '#ddd',
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    fontSize: 16,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
+    marginBottom: 20,
+    width: 300,
   },
   socialButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#3b5998',
+    color: '#000000ff',
     marginLeft: 10,
-    borderRadius: 5,
-    padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#3b5998',
+
   },
   socialIcon: {
     width: 24,
     height: 24,
     marginRight: 8,
   },
-  socialButtonsContainer: {
+  divider: {
     flexDirection: 'row',
-    marginTop: 20,
-    justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
+    marginVertical: 20,
+    width: 300,
   },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#ddd',
+  },
+  dividerText: {
+    marginHorizontal: 10,
+    color: '#666',
+  },
+  signUpContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  signUpText: {
+    color: '#666',
+  },
+  signUpLink: {
+    color: '#9dd327',
+    fontWeight: 'bold',
+  },
+
+
 });

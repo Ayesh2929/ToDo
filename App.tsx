@@ -29,7 +29,7 @@ export default function App() {
       <View style={styles.btns} >
         <TouchableOpacity style={styles.socialButtonText}>
                 <Image 
-                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/300/300221.png' }} 
+                  source= {require('./assets/img/register.png')}
                   
                   style={styles.socialIcon}
                 />

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Link } from "expo-router";
 
 type Task = {
   id: string;
@@ -99,6 +100,8 @@ export default function Home() {
 
       <View style={styles.tasksContainer}>
         <Text style={styles.sectionTitle}>Tasks</Text>
+
+ 
 
         {
           tasks.length === 0 ? (
@@ -298,5 +301,6 @@ const styles = StyleSheet.create({
     color: '#4CAF50',
     fontWeight: 'bold',
   },
+ 
 
 });

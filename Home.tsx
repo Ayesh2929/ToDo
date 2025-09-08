@@ -4,35 +4,74 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } 
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Home() {
-
-  const [tasks , setTasks] = useState([]);
-const [newTask, setNewTask] = useState('');
-
-useEffect(() =>{
-loadTasks();
-},[]);
-
-const loadTasks = async () => {
-  try{
-const storedTasks = await AsyncStorage.getItem('tasks');
-if (storedTasks !== null) {
-  setTasks(JSON.parse(storedTasks));
-}else{
-  <Text>Pleace add</Text>
-}
-
-  }catch (e){
-    console.error('tasks loading failed',e);
-  }
+type Task = {
+  id: string;
+  text: string;
+  completed: boolean;
 };
 
-  const addTask =() =>{
-    if (newTask.trim() !==) {
-      
-    }
-  }
+export default function Home() {
 
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState('');
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  useEffect(() => {
+    saveTasks();
+
+  }, [tasks]);
+
+  const loadTasks = async () => {
+    try {
+      const storedTasks = await AsyncStorage.getItem('tasks');
+      if (storedTasks !== null) {
+        setTasks(JSON.parse(storedTasks));
+      } else {
+        setTasks([
+          { id: '1', text: 'Complete project proposal', completed: false },
+          { id: '2', text: 'Buy groceries', completed: true },
+          { id: '3', text: 'Call mom', completed: false },
+          { id: '4', text: 'Go for a run', completed: false },
+        ]);
+      }
+
+    } catch (e) {
+      console.error('tasks loading failed', e);
+    }
+  };
+
+  const saveTasks = async () => {
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+    } catch (e) {
+      console.error('tasks saving failed', e);
+    }
+  };
+
+  const addTask = () => {
+    if (newTask.trim() !== '') {
+      const updatedTasks = [
+        ...tasks,
+        { id: Date.now().toString(), text: newTask, completed: false }
+      ];
+      setTasks(updatedTasks);
+      setNewTask('');
+    }
+  };
+
+  const toggleTask = (id: string) => {
+    const updatedTasks = tasks.map(task => task.id === id ?
+      { ...task, completed: !task.completed } : task);
+    setTasks(updatedTasks);
+  };
+
+  const deleteTask = (id: string) => {
+    const updatedTasks = tasks.filter(task => task.id !== id);
+    setTasks(updatedTasks);
+  };
 
   return (
     <View style={styles.container}>
@@ -73,7 +112,7 @@ if (storedTasks !== null) {
               renderItem={({ item }) => (
                 <View style={styles.taskItem}>
                   <TouchableOpacity style={[styles.checkbox, item.completed && styles.checkboxCompleted]}
-                  // onPress{() => toggleTask(item.id)} 
+                  onPress={() => toggleTask(item.id)} 
                   >
                     {item.completed && (
                       <Image
@@ -87,7 +126,7 @@ if (storedTasks !== null) {
                   </Text>
 
                   <TouchableOpacity style={styles.deleteButton}
-                  // onPress={() => deleteTask(item.id)}
+                  onPress={() => deleteTask(item.id)}
                   >
                     <Image
                       source={require('./assets/img/register.png')}

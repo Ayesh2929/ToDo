@@ -1,68 +1,116 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
 
-  const [tasks, setTasks] = useState([
-    { id: '1', text: 'Complete project proposal', completed: false },
-    { id: '2', text: 'Buy groceries', completed: true },
-    { id: '3', text: 'Call mom', completed: false },
-    { id: '4', text: 'Go for a run', completed: false },
-  ]);
-  const [newTask, setNewTask] = useState('');
-  
-    const addTask = () => {
-        if (newTask.trim() !== ''){
-            setTasks([...tasks, {id: Date.now().toString(), text: newTask, completed: false}]);
-            setNewTask('');
-        };
-    };
+  const [tasks , setTasks] = useState([]);
+const [newTask, setNewTask] = useState('');
 
+useEffect(() =>{
+loadTasks();
+},[]);
 
+const loadTasks = async () => {
+  try{
+const storedTasks = await AsyncStorage.getItem('tasks');
+if (storedTasks !== null) {
+  setTasks(JSON.parse(storedTasks));
+}else{
+  <Text>Pleace add</Text>
+}
 
-const storeData = async () => {
-  try {
-    // const jsonValue = JSON.stringify(value);
-    // await AsyncStorage.setItem('my-key', jsonValue);
-  } catch (e) {
-    // saving error
+  }catch (e){
+    console.error('tasks loading failed',e);
   }
 };
 
-  return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-            <Text style={styles.mainTitle}>Home</Text>
-            <Text style={styles.subTitle}>My Tasks, What do you want to do today?</Text>
-          </View>
+  const addTask =() =>{
+    if (newTask.trim() !==) {
+      
+    }
+  }
 
-          <SafeAreaView style={styles.formContainer}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Add a new task</Text>
-              <View style={styles.addTaskContainer}>
-                <TextInput style={styles.input}
-                onChangeText={setNewTask}
-                placeholder="Type your task here..."
-                placeholderTextColor="#999"
-                value={newTask}
-                />
-           <TouchableOpacity style={styles.addButton} onPress={addTask}>
+
+  return (
+    <View style={styles.container}>
+      <SafeAreaView style={styles.formContainer}>
+        <View style={styles.header}>
+          <Text style={styles.mainTitle}>Home</Text>
+          <Text style={styles.subTitle}>My Tasks, What do you want to do today?</Text>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Add a new task</Text>
+          <View style={styles.addTaskContainer}>
+            <TextInput style={styles.input}
+              onChangeText={setNewTask}
+              placeholder="Type your task here..."
+              placeholderTextColor="#999"
+              value={newTask}
+            />
+            <TouchableOpacity style={styles.addButton} onPress={addTask}>
               <Text style={styles.addButtonText}>+</Text>
             </TouchableOpacity>
-              </View>
-            </View>
-              </SafeAreaView>
-            <StatusBar/>
-            
+          </View>
         </View>
-    );
+      </SafeAreaView>
+
+      <View style={styles.tasksContainer}>
+        <Text style={styles.sectionTitle}>Tasks</Text>
+
+        {
+          tasks.length === 0 ? (
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyText}>No tasks yet!</Text>
+            </View>
+          ) : (
+            <FlatList
+              data={tasks}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <View style={styles.taskItem}>
+                  <TouchableOpacity style={[styles.checkbox, item.completed && styles.checkboxCompleted]}
+                  // onPress{() => toggleTask(item.id)} 
+                  >
+                    {item.completed && (
+                      <Image
+                        source={require('./assets/img/register.png')}
+                        style={styles.checkmark}
+                      />
+                    )}
+                  </TouchableOpacity>
+                  <Text style={[styles.taskText, item.completed && styles.taskCompleted]}>
+                    {item.text}
+                  </Text>
+
+                  <TouchableOpacity style={styles.deleteButton}
+                  // onPress={() => deleteTask(item.id)}
+                  >
+                    <Image
+                      source={require('./assets/img/register.png')}
+                      style={styles.deleteIcon}
+                    />
+                  </TouchableOpacity>
+
+                </View>
+              )}
+            />
+          )
+        }
+
+      </View>
+
+      <StatusBar />
+
+    </View>
+  );
 }
 const styles = StyleSheet.create({
 
-   container: {
+  container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
@@ -72,6 +120,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 20,
     alignItems: 'center',
+    marginTop: 30
   },
   mainTitle: {
     fontSize: 32,

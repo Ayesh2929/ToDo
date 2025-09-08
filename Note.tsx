@@ -33,7 +33,7 @@ export default function MyNote() {
       if (storedNotes !== null) {
         setNotes(JSON.parse(storedNotes));
       } else {
-        // Sample notes if none exist
+  
         const sampleNotes = [
           { 
             id: '1', 

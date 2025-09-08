@@ -3,7 +3,20 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Link } from "expo-router";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Settings" component={SignUp} />
+    </Tab.Navigator>
+  );
+}
 
 type Task = {
   id: string;
@@ -18,6 +31,7 @@ export default function Home() {
 
   useEffect(() => {
     loadTasks();
+   MyTabs();
   }, []);
 
   useEffect(() => {

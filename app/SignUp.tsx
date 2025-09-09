@@ -1,11 +1,11 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React from "react";
-import { SafeAreaView, StatusBar, TextInput, TouchableOpacity, View, Image, Text, StyleSheet } from "react-native";
+import { SafeAreaView, StatusBar, TextInput, TouchableOpacity, View, Image, Text, StyleSheet, Alert, Pressable } from "react-native";
 
 export default function SignUp() {
-    const [text, onChangeText] = React.useState('');
-    const [text1, onChangeText1] = React.useState('');
-    const [text2, onChangeText2] = React.useState('');
+    const [getUsername, onChangeText] = React.useState('');
+    const [getEmail, onChangeText1] = React.useState('');
+    const [getPassword, onChangeText2] = React.useState('');
 return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -20,7 +20,7 @@ return (
             onChangeText={onChangeText}
             placeholder='Enter your username'
             placeholderTextColor="#999"
-            value={text}
+            value={getUsername}
             />
         </View>
         
@@ -31,7 +31,8 @@ return (
             onChangeText={onChangeText1}    
             placeholder='Enter your email'
             placeholderTextColor="#999"
-            value={text1}
+            value={getEmail}
+          
           />
         </View>
         <View style={styles.inputContainer}>
@@ -42,18 +43,57 @@ return (
             placeholder='Enter your password'
             placeholderTextColor="#999"
             secureTextEntry={true}
-            value={text2}
+            value={getPassword}
           />
         </View>
       </SafeAreaView>
         <View style={styles.btnsContainer}>
-        <TouchableOpacity style={styles.signInButton}>
+        {/* <TouchableOpacity style={styles.signInButton}>
           <Image 
-            source={require('./assets/img/register.png')}
+            source={require('./../assets/img/register.png')}
             style={styles.socialIcon}
             />
-            <Text style={styles.signInButtonText}>Sign Up</Text>
-        </TouchableOpacity>
+            <Text >Sign Up</Text>
+        </TouchableOpacity> */}
+          <Pressable
+        style={styles.signInButton}
+        onPress={async () => {
+          try {
+            const response = await fetch(
+              "http://192.168.1.123:8080/ToDo-Backend/SignUp",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  username: getUsername,
+                  email: getEmail,
+                  password: getPassword,
+                }),
+              }
+            );
+
+            const data = await response.json();
+console.log(data);
+            if (data.status) {
+              router.push("/tabs/Home.tsx");
+            }
+
+            if (data.status == "error") {
+              Object.keys(data.data).forEach((key) => {
+                Alert.alert(
+                  "Signup Failed",
+                  data.data[key][0] || "Something went wrong"
+                );
+              });
+            }
+          } catch (error) {
+            console.error(error);
+            Alert.alert("Error", "Unable to connect to the server.");
+          }
+        }}
+      >
+        <Text style={styles.signInButtonText}>Login</Text>
+      </Pressable>
       </View>
         <View style={styles.divider}>
         <View style={styles.dividerLine} />
@@ -62,7 +102,7 @@ return (
         </View>
         <View style={styles.signUpContainer}></View>
         <Text style={styles.signUpText}>Already have an account? </Text>
-        <Link href='/SignIn.tsx' style={styles.signUpLink}>Sign In</Link>
+        <Link href={'/index'} style={styles.signUpLink}>Sign In</Link>
 
         <StatusBar />
     </View>

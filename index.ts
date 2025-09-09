@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 
-import SignIn from './SignIn';
-// import SignUp from './SignUp';
+// import SignIn from './app';
+import SignIn from './app/index';
 // import Home from './Home';
 // import Note from './Note';
 // import Profile from './Profile';

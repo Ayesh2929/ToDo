@@ -4,19 +4,11 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } 
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+
 
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Settings" component={SignUp} />
-    </Tab.Navigator>
-  );
-}
+
 
 type Task = {
   id: string;
@@ -31,7 +23,7 @@ export default function Home() {
 
   useEffect(() => {
     loadTasks();
-   MyTabs();
+
   }, []);
 
   useEffect(() => {
@@ -133,7 +125,7 @@ export default function Home() {
                   >
                     {item.completed && (
                       <Image
-                        source={require('./assets/img/register.png')}
+                        source={require('./../assets/img/register.png')}
                         style={styles.checkmark}
                       />
                     )}
@@ -146,7 +138,7 @@ export default function Home() {
                   onPress={() => deleteTask(item.id)}
                   >
                     <Image
-                      source={require('./assets/img/register.png')}
+                      source={require('./../assets/img/register.png')}
                       style={styles.deleteIcon}
                     />
                   </TouchableOpacity>

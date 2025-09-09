@@ -6,6 +6,7 @@ import {Link} from 'expo-router';
 
 export default function SignIn() {
 
+  
   const [text, onChangeText] = React.useState('');
   const [text1, onChangeText1] = React.useState('');
 
@@ -47,7 +48,7 @@ export default function SignIn() {
       <View style={styles.btnsContainer}>
         <TouchableOpacity style={styles.signInButton}>
           <Image 
-            source={require('./assets/img/register.png')}
+            source={require('./../assets/img/register.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.signInButtonText}>Sign In</Text>
@@ -63,7 +64,7 @@ export default function SignIn() {
       <View style={styles.signUpContainer}>
         <Text style={styles.signUpText}>Don't have an account? </Text>
         
-<Link href='/SignIn.tsx' style={styles.signUpLink}>Sign Up</Link>
+<Link href={'/SignUp'} ><Text style={styles.signUpLink}>Sign Up</Text></Link>
       </View>
 
       <StatusBar style="auto" />

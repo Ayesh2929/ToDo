@@ -211,7 +211,7 @@ export default function MyNote() {
                     style={styles.deleteButton}
                   >
                     <Image
-                      source={require('./assets/img/register.png')}
+                      source={require('./../assets/img/register.png')}
                       style={styles.deleteIcon}
                     />
                   </TouchableOpacity>

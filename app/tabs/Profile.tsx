@@ -210,9 +210,7 @@ export default function UserProfile() {
 
         <View style={styles.actionsSection}>
           <Text style={styles.sectionTitle}>Account</Text>
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={styles.actionButtonText}>Change Password</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity style={styles.actionButton}>
             <Text style={styles.actionButtonText}>Privacy Policy</Text>
           </TouchableOpacity>

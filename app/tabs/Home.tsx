@@ -1,10 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -124,10 +124,8 @@ export default function Home() {
                   onPress={() => toggleTask(item.id)} 
                   >
                     {item.completed && (
-                      <Image
-                        source={require('./../../assets/img/register.png')}
-                        style={styles.checkmark}
-                      />
+
+                      <Ionicons name="checkmark-outline" size={20} color="red"/>
                     )}
                   </TouchableOpacity>
                   <Text style={[styles.taskText, item.completed && styles.taskCompleted]}>
@@ -137,10 +135,9 @@ export default function Home() {
                   <TouchableOpacity style={styles.deleteButton}
                   onPress={() => deleteTask(item.id)}
                   >
-                    <Image
-                      source={require('./../../assets/img/cancel.jpg')}
-                      style={styles.deleteIcon}
-                    />
+ 
+
+                    <Ionicons name="close-outline" size={30} color="red" />
                   </TouchableOpacity>
 
                 </View>

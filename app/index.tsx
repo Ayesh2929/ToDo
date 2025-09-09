@@ -92,7 +92,7 @@ export default function SignIn() {
                 }}
               >
                 <Text style={styles.signInButtonText}>
-                  <Ionicons name="log-in" size={30} color="white" />
+                  
 
                       Sign In</Text>
               </Pressable>

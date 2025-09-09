@@ -48,13 +48,7 @@ return (
         </View>
       </SafeAreaView>
         <View style={styles.btnsContainer}>
-        {/* <TouchableOpacity style={styles.signInButton}>
-          <Image 
-            source={require('./../assets/img/register.png')}
-            style={styles.socialIcon}
-            />
-            <Text >Sign Up</Text>
-        </TouchableOpacity> */}
+
           <Pressable
         style={styles.signInButton}
         onPress={async () => {
@@ -92,7 +86,7 @@ console.log(data);
           }
         }}
       >
-        <Text style={styles.signInButtonText}>Login</Text>
+        <Text style={styles.signInButtonText}>Sign Up</Text>
       </Pressable>
       </View>
         <View style={styles.divider}>
@@ -102,7 +96,7 @@ console.log(data);
         </View>
         <View style={styles.signUpContainer}></View>
         <Text style={styles.signUpText}>Already have an account? </Text>
-        <Link href={'/index'} style={styles.signUpLink}>Sign In</Link>
+        <Link href={'/'} style={styles.signUpLink}>Sign In</Link>
 
         <StatusBar />
     </View>

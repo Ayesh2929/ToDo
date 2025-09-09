@@ -15,7 +15,7 @@ export default function TabsLayout() {
             size={22}
             color="black"
             style={{ marginRight: 15 }}
-            onPress={()=>router.push("/login")}
+            onPress={()=>router.push("/../")}
           />
         ),
       }}

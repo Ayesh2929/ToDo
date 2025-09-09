@@ -125,7 +125,7 @@ export default function Home() {
                   >
                     {item.completed && (
                       <Image
-                        source={require('./../assets/img/register.png')}
+                        source={require('./../../assets/img/register.png')}
                         style={styles.checkmark}
                       />
                     )}
@@ -138,7 +138,7 @@ export default function Home() {
                   onPress={() => deleteTask(item.id)}
                   >
                     <Image
-                      source={require('./../assets/img/register.png')}
+                      source={require('./../../assets/img/Cancel.jpg')}
                       style={styles.deleteIcon}
                     />
                   </TouchableOpacity>

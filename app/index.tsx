@@ -1,14 +1,14 @@
 
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Pressable } from 'react-native';
-import {Link} from 'expo-router';
-
+import { Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Pressable, Alert } from 'react-native';
+import {Link, router} from 'expo-router';
+import { Ionicons } from "@expo/vector-icons";
 export default function SignIn() {
 
   
-  const [text, onChangeText] = React.useState('');
-  const [text1, onChangeText1] = React.useState('');
+  const [getEmail, onChangeText] = React.useState('');
+  const [getPassword, onChangeText1] = React.useState('');
 
   return (
     <View style={styles.container}>
@@ -25,7 +25,7 @@ export default function SignIn() {
             onChangeText={onChangeText}
             placeholder='Enter your email'
             placeholderTextColor="#999"
-            value={text}
+            value={getEmail}
           />
         </View>
         
@@ -37,7 +37,7 @@ export default function SignIn() {
             placeholder='Enter your password'
             placeholderTextColor="#999"
             secureTextEntry={true}
-            value={text1}
+            value={getPassword}
           />
           <TouchableOpacity style={styles.forgotPassword}>
             <Text style={styles.forgotPasswordText}>Forgot?</Text>
@@ -46,13 +46,56 @@ export default function SignIn() {
       </SafeAreaView>
 
       <View style={styles.btnsContainer}>
-        <TouchableOpacity style={styles.signInButton}>
+        {/* <TouchableOpacity style={styles.signInButton}>
           <Image 
             source={require('./../assets/img/register.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.signInButtonText}>Sign In</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+                  <Pressable
+                style={styles.signInButton}
+                onPress={async () => {
+                  try {
+                    const response = await fetch(
+                      "http://192.168.1.123:8080/ToDo-Backend/SignIn",
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                   
+                          email: getEmail,
+                          password: getPassword,
+                        }),
+                      }
+                    );
+        
+                    const data = await response.json();
+        console.log(data);
+                    if (data.status) {
+                      router.push("/tabs/Home");
+                    }
+        
+                    if (data.status == "error") {
+                      Object.keys(data.data).forEach((key) => {
+                        Alert.alert(
+                          "Signup Failed",
+                          data.data[key][0] || "Something went wrong"
+                        );
+                      });
+                    }
+                  } catch (error) {
+                    console.error(error);
+                    Alert.alert("Error", "Unable to connect to the server.");
+                  }
+                }}
+              >
+                <Text style={styles.signInButtonText}>
+                  <Ionicons name="log-in" size={30} color="white" />
+
+                      Sign In</Text>
+              </Pressable>
       </View>
       
       <View style={styles.divider}>

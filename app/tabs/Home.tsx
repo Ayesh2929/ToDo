@@ -138,7 +138,7 @@ export default function Home() {
                   onPress={() => deleteTask(item.id)}
                   >
                     <Image
-                      source={require('./../../assets/img/Cancel.jpg')}
+                      source={require('./../../assets/img/cancel.jpg')}
                       style={styles.deleteIcon}
                     />
                   </TouchableOpacity>
